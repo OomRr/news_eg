@@ -14,6 +14,7 @@ class NewsCubit extends Cubit<NewsState> {
 
   static NewsCubit get(context) => BlocProvider.of(context);
   int currentIndex = 0;
+  bool isDark=false;
   List<BottomNavigationBarItem> bottomItems = [
     const BottomNavigationBarItem(
       icon: Icon(
@@ -32,12 +33,6 @@ class NewsCubit extends Cubit<NewsState> {
         Icons.science_outlined,
       ),
       label: 'Science',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.settings,
-      ),
-      label: 'Settings',
     ),
   ];
   List<Widget> screens = [
@@ -113,5 +108,9 @@ class NewsCubit extends Cubit<NewsState> {
       emit(SportsSuccess());
     }
 
+  }
+  void changeTheme(){
+    isDark= !isDark;
+    emit(ThemeChange());
   }
 }

@@ -42,10 +42,7 @@ class ShowItem extends StatelessWidget {
                   Expanded(
                       child: Text(
                     article['title'] ?? 'No title',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   )),

@@ -16,7 +16,18 @@ class NewsLayout extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text("News App"),
-            actions: const [Icon(Icons.search_outlined)],
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.search_outlined),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.brightness_6_outlined),
+                onPressed: () {
+                  cubit.changeTheme();
+                },
+              ),
+            ],
           ),
           body: cubit.screens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
@@ -26,7 +37,6 @@ class NewsLayout extends StatelessWidget {
               cubit.changeBottomNavBar(index);
             },
           ),
-
         );
       },
     );

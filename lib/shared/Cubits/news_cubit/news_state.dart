@@ -25,3 +25,4 @@ class ScienceFailure extends NewsState {
 
   ScienceFailure(this.e);
 }
+class ThemeChange extends NewsState {}
