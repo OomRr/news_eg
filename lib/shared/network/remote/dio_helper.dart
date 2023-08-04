@@ -16,7 +16,7 @@ class DioHelper {
   static Future<Response> getDate(
       {required String query}) async {
     return await dio.get(
-        'https://newsapi.org/v2/top-headlines?$query&apiKey=7cfeee815042464cb7855fb97e35ba72');
+        'https://gnews.io/api/v4/top-headlines?$query&apikey=799d231dbd4a8e14598372b927f967d1');
   }
 
 }
