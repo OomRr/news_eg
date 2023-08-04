@@ -18,4 +18,5 @@ class DioHelper {
     return await dio.get(
         'https://newsapi.org/v2/top-headlines?$query&apiKey=7cfeee815042464cb7855fb97e35ba72');
   }
+
 }
