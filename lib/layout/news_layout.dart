@@ -24,7 +24,7 @@ class NewsLayout extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.brightness_6_outlined),
                 onPressed: () {
-                  cubit.changeTheme();
+                  cubit.changeTheme(null);
                 },
               ),
             ],

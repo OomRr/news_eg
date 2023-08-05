@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_eg/modules/business/business_screen.dart';
 import 'package:news_eg/modules/science/science_screen.dart';
 import 'package:news_eg/modules/sports/sports_screen.dart';
+import 'package:news_eg/shared/network/local/cache_helper.dart';
 import 'package:news_eg/shared/network/remote/dio_helper.dart';
 
 import '../../../modules/settings/settings_screen.dart';
@@ -14,7 +15,7 @@ class NewsCubit extends Cubit<NewsState> {
 
   static NewsCubit get(context) => BlocProvider.of(context);
   int currentIndex = 0;
-  bool isDark=false;
+  bool isDark = false;
   List<BottomNavigationBarItem> bottomItems = [
     const BottomNavigationBarItem(
       icon: Icon(
@@ -44,73 +45,82 @@ class NewsCubit extends Cubit<NewsState> {
 
   void changeBottomNavBar(int index) {
     currentIndex = index;
-    if(index==1) {
+    if (index == 1) {
       getSports();
     }
-    if(index==2) {
+    if (index == 2) {
       getScience();
     }
     emit(NewsBottomNav());
   }
-
   List<dynamic> business = [];
   List<dynamic> sports = [];
   List<dynamic> science = [];
-
   void getBusiness() {
-    if(business.isEmpty){
+    if (business.isEmpty) {
       emit(BusinessLoading());
       DioHelper.getDate(
         query: 'country=eg&category=business',
       ).then((value) {
-        business=value.data['articles'];
+        business = value.data['articles'];
         print(business[0]['urlToImage']);
         emit(BusinessSuccess());
       }).catchError((e) {
         emit(BusinessFailure(e.toString()));
         print(e.toString());
       });
-    }else{
+    } else {
       emit(BusinessSuccess());
     }
-
   }
+
   void getScience() {
-    if(science.isEmpty){
+    if (science.isEmpty) {
       emit(ScienceLoading());
       DioHelper.getDate(
         query: 'country=eg&category=science',
       ).then((value) {
-        science=value.data['articles'];
+        science = value.data['articles'];
         emit(ScienceSuccess());
       }).catchError((e) {
         emit(ScienceFailure(e.toString()));
         print(e.toString());
       });
-    }else {
+    } else {
       emit(ScienceSuccess());
     }
-
   }
+
   void getSports() {
-    if(sports.isEmpty){
+    if (sports.isEmpty) {
       emit(SportsLoading());
       DioHelper.getDate(
         query: 'country=eg&category=sports',
       ).then((value) {
-        sports=value.data['articles'];
+        sports = value.data['articles'];
         emit(SportsSuccess());
       }).catchError((e) {
         emit(SportsFailure(e.toString()));
         print(e.toString());
       });
-    }else {
+    } else {
       emit(SportsSuccess());
     }
-
   }
-  void changeTheme(){
-    isDark= !isDark;
-    emit(ThemeChange());
+
+  void changeTheme( bool? fromShared) {
+    if(fromShared!=null) {
+      isDark=fromShared;
+      emit(ThemeChange());
+    }
+    else{
+      isDark = !isDark;
+      CacheHelper.putData(key: 'isDark', value: isDark).then(
+            (value) {
+          emit(ThemeChange());
+        },
+      );
+    }
+
   }
 }

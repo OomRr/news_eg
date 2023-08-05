@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_eg/shared/Cubits/news_cubit/news_cubit.dart';
+import 'package:news_eg/shared/network/local/cache_helper.dart';
 import 'package:news_eg/shared/network/remote/dio_helper.dart';
-
 import 'layout/news_layout.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   DioHelper();
-  runApp(const MyApp());
+  await CacheHelper.init();
+  bool? isDark=CacheHelper.getData(key: 'isDark');
+  runApp(MyApp(isDark: isDark!,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isDark;
+  const MyApp({super.key, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NewsCubit()..getBusiness(),
+      create: (context) => NewsCubit()..getBusiness()..changeTheme(isDark),
       child: BlocConsumer<NewsCubit, NewsState>(
         listener: (context, state) {
           // TODO: implement listener
