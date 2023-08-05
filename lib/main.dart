@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_eg/shared/Cubits/news_cubit/news_cubit.dart';
 import 'package:news_eg/shared/network/local/cache_helper.dart';
 import 'package:news_eg/shared/network/remote/dio_helper.dart';
+import 'package:splash_view/source/presentation/pages/pages.dart';
+import 'package:splash_view/source/presentation/presentation.dart';
 import 'layout/news_layout.dart';
 
 void main() async{
@@ -83,8 +86,15 @@ class MyApp extends StatelessWidget {
             themeMode: NewsCubit.get(context).isDark
                 ? ThemeMode.dark
                 : ThemeMode.light,
-            home: const Directionality(
-                textDirection: TextDirection.rtl, child: NewsLayout()),
+            home: SplashView(
+              logo: Image.asset('assets/images/lofo.png').animate()
+                  .slideY(begin: -1, end: .0, duration: const Duration(seconds: 1))
+                  .then()
+                  .fadeIn(duration: const Duration(seconds: 1)),
+              backgroundColor: Colors.white,
+              done: Done(const Directionality(
+                  textDirection: TextDirection.rtl, child: NewsLayout()),),
+            ),
           );
         },
       ),
