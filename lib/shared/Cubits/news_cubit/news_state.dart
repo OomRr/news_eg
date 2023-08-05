@@ -25,4 +25,11 @@ class ScienceFailure extends NewsState {
 
   ScienceFailure(this.e);
 }
+class SearchLoading extends NewsState {}
+class SearchSuccess extends NewsState {}
+class SearchFailure extends NewsState {
+  final String e;
+
+  SearchFailure(this.e);
+}
 class ThemeChange extends NewsState {}

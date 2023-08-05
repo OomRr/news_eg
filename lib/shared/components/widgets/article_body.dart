@@ -20,7 +20,7 @@ class ArticleImp extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemBuilder:(context,index)=> ShowItem(article: list[index],),
       ),
-      fallback: (context)=>shimmerLoading(),
+      fallback: (context)=>Center(child: shimmerLoading()),
     );
   }
 }

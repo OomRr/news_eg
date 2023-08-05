@@ -56,11 +56,12 @@ class NewsCubit extends Cubit<NewsState> {
   List<dynamic> business = [];
   List<dynamic> sports = [];
   List<dynamic> science = [];
+  List<dynamic> search = [];
   void getBusiness() {
     if (business.isEmpty) {
       emit(BusinessLoading());
       DioHelper.getDate(
-        query: 'country=eg&category=business',
+        query: 'top-headlines?country=eg&category=business',
       ).then((value) {
         business = value.data['articles'];
         print(business[0]['urlToImage']);
@@ -78,7 +79,7 @@ class NewsCubit extends Cubit<NewsState> {
     if (science.isEmpty) {
       emit(ScienceLoading());
       DioHelper.getDate(
-        query: 'country=eg&category=science',
+        query: 'top-headlines?country=eg&category=science',
       ).then((value) {
         science = value.data['articles'];
         emit(ScienceSuccess());
@@ -95,7 +96,7 @@ class NewsCubit extends Cubit<NewsState> {
     if (sports.isEmpty) {
       emit(SportsLoading());
       DioHelper.getDate(
-        query: 'country=eg&category=sports',
+        query: 'top-headlines?country=eg&category=sports',
       ).then((value) {
         sports = value.data['articles'];
         emit(SportsSuccess());
@@ -106,6 +107,17 @@ class NewsCubit extends Cubit<NewsState> {
     } else {
       emit(SportsSuccess());
     }
+  }
+  void getSearch({required String q}) {
+    emit(SearchLoading());
+    DioHelper.getDate(
+      query: 'everything?q=$q',
+    ).then((value) {
+      search =  value.data['articles'];
+      emit(SearchSuccess());
+    }).catchError((e) {
+      emit(SearchFailure(e.toString()));
+    });
   }
 
   void changeTheme( bool? fromShared) {
