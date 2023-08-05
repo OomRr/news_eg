@@ -4,13 +4,12 @@ import 'package:news_eg/shared/components/widgets/shimmer.dart';
 
 import 'custom_general_item.dart';
 class ArticleImp extends StatelessWidget {
-  const ArticleImp({
+   ArticleImp({
     super.key,
-    required this.list,
+    required this.list, this.isSearch=false,
   });
-
   final List list;
-
+  final bool isSearch;
   @override
   Widget build(BuildContext context) {
     return ConditionalBuilder(
@@ -20,7 +19,7 @@ class ArticleImp extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemBuilder:(context,index)=> ShowItem(article: list[index],),
       ),
-      fallback: (context)=>Center(child: shimmerLoading()),
+      fallback:(context)=>isSearch?Container():Center(child: shimmerLoading()),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_eg/shared/components/widgets/article_body.dart';
+
 import '../../shared/Cubits/news_cubit/news_cubit.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -53,9 +54,10 @@ class SearchScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: SizedBox(
-                      height: MediaQuery.sizeOf(context).height*1,
-                      width: MediaQuery.sizeOf(context).width*1,
-                        child: ArticleImp(list: list)),
+                      height: MediaQuery.sizeOf(context).height * 1,
+                      width: MediaQuery.sizeOf(context).width * 1,
+                      child: ArticleImp(list: list,isSearch: true,),
+                    ),
                   ),
                 ],
               ),
